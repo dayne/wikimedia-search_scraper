@@ -16,4 +16,14 @@ You'll need ruby, bundler, and gi:
 
 ## running
 
-   ./bin/wlscrape.rb toast # get URL of all the cables that refernece toast
+   ./bin/wlsearch boogers # get a URL of all the cables that have boogers.
+   ./bin/wlsearch boogers | wlscrape # download all the pages with boogers
+
+
+## caveats
+
+None of this actually done:  
+
+* The search doesn't respect the pagination of results so you'll really only get the first 20 URls on something that might have 500 results.  
+* The scraper just grabs GI file table header information and doesn't do anything with it.
+
