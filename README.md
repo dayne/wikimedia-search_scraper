@@ -3,14 +3,14 @@
 testing script for wikimedia scraping based on a search string.
 
 This isn't supposed to be something super awesome.  Just a test script to show
-how easy it is to scrap wikileaks and get the data ready for ingest into
+how easy it is to scrape wikileaks and get the data ready for ingest into
 some data analysis tool.
 
 ## setup
 
 You'll need ruby, bundler, and gi:
 
-    git clone 
+    git clone git@github.com:dayne/wikimedia-search_scraper.git
     cd wikimedia-search_scraper
     bundle
 

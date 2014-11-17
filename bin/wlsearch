@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
-#
 
 require 'mechanize'
+require 'nokogiri'
+require 'colored'
 
 TEST = ARGV.delete("--test")
+
+VERBOSE = ARGV.delete("-v")
 
 SEARCH = ARGV.pop
 
@@ -17,11 +20,12 @@ url = URL_PREFIX + SEARCH
 
 html = agent.get(url).body
 
-require 'nokogiri'
 
 html_doc = Nokogiri::HTML(html)
 
 mda = html_doc.xpath("//span[@class='meta_details']/a")
+
+STDERR.puts "# Found #{mda.size} results for the search term: ".green + SEARCH.yellow if VERBOSE
 
 mda.each { |a| 
   puts a['href']

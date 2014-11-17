@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+require 'mechanize'
+require 'nokogiri'
+require 'colored'
+
+agent = Mechanize.new { |agent| agent.user_agent_alias = "Mac Safari" }
+
+pages = {}
+
+VERBOSE = ARGV.delete("-v")
+
+urls = (STDIN.tty?) ? ARGV : $stdin.read.split("\n")
+
+puts urls.inspect
+
+sleep 1
+
+urls.each do |url|
+  pages[url] = {}
+  puts "# scraping url: " + url.green 
+  # insert the element santity check and extraction from URL
+  page_html = agent.get(url).body
+  page_doc = Nokogiri::HTML(page_html)
+  cable_table = page_doc.xpath("//table[@class='cable']//tr")
+  puts cable_table.inspect.red if VERBOSE
+  cable_table.each do |row|
+    puts row.xpath('td') if VERBOSE
+    if row.xpath('th')
+      pages[url][row.xpath('th').text] = row.xpath('td').text.gsub("\n","")
+    end
+  end
+end
+puts pages.inspect.blue if VERBOSE
+
+puts "scraped #{pages.size} pages".red
+pages.each { |p| puts p.inspect }
+
